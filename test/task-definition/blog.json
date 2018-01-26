@@ -1,0 +1,24 @@
+[
+  {
+    "essential": true,
+    "memoryReservation": null,
+    "image": "npalm/040code.github.io:latest",
+    "name": "${container_name}",
+    "portMappings": [
+      {
+        "hostPort": ${container_port},
+        "protocol": "tcp",
+        "containerPort": ${container_port}
+      }
+    ],
+    "environment": [],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${log_group_name}",
+        "awslogs-region": "${log_group_region}",
+        "awslogs-stream-prefix": "${log_group_prefix}"
+      }
+    }
+  }
+]

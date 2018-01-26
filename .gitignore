@@ -1,0 +1,14 @@
+# Compiled files
+*.tfstate
+*.tfstate.*
+
+# Module directory
+.terraform/
+
+# keys
+*id_rsa*
+
+.idea
+.DS_Store
+*envrc
+atlassian-ide-plugin.xml
