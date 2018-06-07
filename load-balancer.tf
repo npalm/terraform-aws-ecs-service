@@ -1,6 +1,8 @@
 resource "aws_alb" "main" {
   count = "${var.enable_lb ? 1 : 0}" ## Load Balancer
 
+  name = "${var.environment}-${var.service_name}"
+
   internal        = "${var.lb_internal}"
   subnets         = ["${var.lb_subnetids}"]
   security_groups = ["${aws_security_group.alb_sg.id}"]
@@ -29,6 +31,8 @@ resource "aws_alb_listener" "main" {
 
 resource "aws_alb_target_group" "main" {
   count = "${var.enable_lb ? 1 : 0}"
+
+  name = "${var.environment}-${var.service_name}"
 
   port        = "${lookup(var.lb_target_group, "host_port", 80)}"
   protocol    = "${upper(lookup(var.lb_target_group, "protocol", "HTTP"))}"
