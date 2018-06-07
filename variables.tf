@@ -83,7 +83,7 @@ variable "task_definition" {
 }
 
 variable "service_desired_count" {
-  description = "The number of services that needs to be created."
+  description = "The number of instances of the task definition to place and keep running."
   default     = "1"
 }
 
