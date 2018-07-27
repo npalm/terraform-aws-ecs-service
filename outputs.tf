@@ -9,3 +9,11 @@ output "service_url" {
         aws_alb_listener.main.*.port
     ))) : ""}"
 }
+
+output "lb_dns_name" {
+  description = "Loadbalancer DNS Name"
+
+  value = "${var.enable_lb ?
+    element(concat(aws_alb.main.*.dns_name, list("")), 0) : ""
+  }"
+}

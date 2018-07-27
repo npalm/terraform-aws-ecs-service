@@ -157,3 +157,4 @@ module "blog" {
 | Name | Description |
 |------|-------------|
 | service_url | Service urls. |
+| lb_dns_name | Load Balancer DNS Name. |
