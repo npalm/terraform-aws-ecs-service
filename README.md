@@ -141,7 +141,7 @@ module "blog" {
 | lb_listener | The listner for the load balancer, SSL in only applied once a certificate arn is provided. | map | `<map>` | no |
 | lb_subnetids | List of subnets to which the load balancer needs to be attached. Mandatory when enable_alb = true. | list | `<list>` | no |
 | lb_target_group | The target group to connectect the container to the load balancer listerner. | map | `<map>` | no |
-| service_desired_count | The number of services that needs to be created. | string | `1` | no |
+| service_desired_count | The number of instances of the task definition to place and keep running. | string | `1` | no |
 | service_launch_type | The launch type, can be EC2 or FARGATE. | string | `EC2` | no |
 | service_name | Logical name of the service. | string | - | yes |
 | task_cpu | CPU value for the task, required for FARGATE. | string | `` | no |
