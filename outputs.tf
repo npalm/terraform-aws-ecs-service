@@ -17,3 +17,9 @@ output "lb_dns_name" {
     element(concat(aws_alb.main.*.dns_name, list("")), 0) : ""
   }"
 }
+
+output "task_definition_arn" {
+  description = "Task definition ARN"
+
+  value = "${aws_ecs_task_definition.main.arn}"
+}
