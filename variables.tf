@@ -45,9 +45,10 @@ variable "lb_target_group" {
   type        = "map"
 
   default = {
-    container_port = 8080
-    host_port      = 80
-    protocol       = "http"
+    container_port       = 8080
+    host_port            = 80
+    protocol             = "http"
+    deregistration_delay = 300
   }
 }
 

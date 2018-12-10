@@ -41,6 +41,8 @@ resource "aws_alb_target_group" "main" {
 
   health_check = "${var.lb_health_check}"
 
+  deregistration_delay = "${lookup(var.lb_target_group, "deregistration_delay", 300)}"
+
   tags {
     Name        = "${var.environment}-${var.service_name}"
     Environment = "${var.environment}"
