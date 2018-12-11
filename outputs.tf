@@ -39,3 +39,11 @@ output "lb_target_group_arn" {
     element(concat(aws_alb_target_group.main.*.arn, list("")), 0) : ""
   }"
 }
+
+output "lb_listener_arn" {
+  description = "Loadbalancer Listener ARN"
+
+  value = "${var.enable_lb ?
+    element(concat(aws_alb_listener.main.*.arn, list("")), 0) : ""
+  }"
+}

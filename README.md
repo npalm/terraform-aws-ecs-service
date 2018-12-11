@@ -161,3 +161,4 @@ module "blog" {
 | task_definition_arn | Task definition ARN. |
 | lb_target_group_arn | Load Balancer Target Group ARN. |
 | lb_arn | Load Balancer ARN. |
+| lb_listener_arn | Load Balancer Listener ARN. |
