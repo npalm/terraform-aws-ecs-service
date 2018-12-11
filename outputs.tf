@@ -18,6 +18,14 @@ output "lb_dns_name" {
   }"
 }
 
+output "lb_arn" {
+  description = "Loadbalancer ARN"
+
+  value = "${var.enable_lb ?
+    element(concat(aws_alb.main.*.arn, list("")), 0) : ""
+  }"
+}
+
 output "task_definition_arn" {
   description = "Task definition ARN"
 
