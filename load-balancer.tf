@@ -60,7 +60,7 @@ resource "aws_security_group" "alb_sg" {
     protocol    = "tcp"
     from_port   = "${lookup(var.lb_listener, "port", 80)}"
     to_port     = "${lookup(var.lb_listener, "port", 80)}"
-    cidr_blocks = ["${var.lb_internal ? "${var.vpc_cidr}" : "0.0.0.0/0"}"]
+    cidr_blocks = ["${split(",",var.lb_internal ? var.vpc_cidr : join(",",var.public_alb_whitelist))}"]
   }
 
   egress {

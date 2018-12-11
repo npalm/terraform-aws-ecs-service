@@ -151,6 +151,7 @@ module "blog" {
 | task_role_arn | The AWS IAM role that will be provided to the task to perform AWS actions. | string | `` | no |
 | vpc_cidr | CIDR for the VPC. | string | - | yes |
 | vpc_id | ID of the VPC. | string | - | yes |
+| public_alb_whitelist | Whitelists IP to be able to access ALB | list | ["0.0.0.0/0","::/0"] | no |
 
 ## Outputs
 
