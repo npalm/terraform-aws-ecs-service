@@ -128,7 +128,7 @@ variable "ecs_service_role" {
 }
 
 variable "public_alb_whitelist" {
-  type = "list"
+  type        = "list"
   description = "Enables to limit the ips that can access the  ALB over public network"
-  default = ["0.0.0.0/0","::/0"]
+  default     = ["0.0.0.0/0", "::/0"]
 }
