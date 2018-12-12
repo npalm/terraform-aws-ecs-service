@@ -55,3 +55,11 @@ output "lb_listener_arn" {
     element(concat(aws_alb_listener.main.*.arn, list("")), 0) : ""
   }"
 }
+
+output "lb_security_group_id" {
+  description = "Loadbalancer Security Group id"
+
+  value = "${var.enable_lb ?
+    element(concat(aws_security_group.alb_sg.*.id, list("")), 0) : ""
+  }"
+}
