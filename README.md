@@ -163,3 +163,4 @@ module "blog" {
 | lb_target_group_arn | Load Balancer Target Group ARN. |
 | lb_arn | Load Balancer ARN. |
 | lb_listener_arn | Load Balancer Listener ARN. |
+| lb_security_group_id | Load Balancer Security Group ID. |
