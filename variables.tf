@@ -132,3 +132,9 @@ variable "public_alb_whitelist" {
   description = "Enables to limit the ips that can access the  ALB over public network"
   default     = ["0.0.0.0/0"]
 }
+
+variable "lb_security_group_ids" {
+  description = "Custom Load Balancer security group ids"
+  type        = "list"
+  default     = []
+}

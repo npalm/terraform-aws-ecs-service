@@ -5,7 +5,7 @@ resource "aws_alb" "main" {
 
   internal        = "${var.lb_internal}"
   subnets         = ["${var.lb_subnetids}"]
-  security_groups = ["${aws_security_group.alb_sg.id}"]
+  security_groups = ["${concat(list(aws_security_group.alb_sg.id), var.lb_security_group_ids)}"]
 
   tags {
     Name        = "${var.environment}-${var.service_name}"
