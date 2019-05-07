@@ -7,6 +7,7 @@ resource "aws_ecs_task_definition" "main" {
   memory                   = "${var.task_memory}"
   requires_compatibilities = ["${var.service_launch_type}"]
   execution_role_arn       = "${var.awsvpc_task_execution_role_arn}"
+  volume                   = ["${var.task_volumes}"]
 }
 
 # Service for awsvpc networking and ALB
