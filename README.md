@@ -150,6 +150,7 @@ module "blog" {
 | task_memory | Memory value for the task, required for FARGATE. | string | `` | no |
 | task_network_mode | The network mode to be used in the task definiton. Supported modes are awsvpc and bridge. | string | `awsvpc` | no |
 | task_role_arn | The AWS IAM role that will be provided to the task to perform AWS actions. | string | `` | no |
+| task_volumes | List of volume blocks for task definition | list | `[]` | no |
 | vpc_cidr | CIDR for the VPC. | string | - | yes |
 | vpc_id | ID of the VPC. | string | - | yes |
 | public_alb_whitelist | Whitelists IP to be able to access ALB | list | ["0.0.0.0/0","::/0"] | no |

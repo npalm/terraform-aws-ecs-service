@@ -118,6 +118,12 @@ variable "task_memory" {
   default     = ""
 }
 
+variable "task_volumes" {
+  description = "List of volume blocks for task definition"
+  type        = "list"
+  default     = []
+}
+
 variable "enable_lb" {
   description = "Enable or disable the load balancer."
   default     = true
