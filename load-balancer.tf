@@ -15,7 +15,7 @@ resource "aws_alb" "main" {
 }
 
 resource "aws_alb_listener" "main" {
-  count = "${var.enable_lb ? 1 : 0 }"
+  count = "${var.enable_lb ? 1 : 0}"
 
   load_balancer_arn = "${aws_alb.main[0].id}"
   port              = "${lookup(var.lb_listener, "port")}"
@@ -42,15 +42,15 @@ resource "aws_alb_target_group" "main" {
   dynamic "health_check" {
     for_each = var.lb_health_check
     content {
-      enabled  = lookup(health_check.value, "enabled", null) == null ? true : health_check.value.enabled
-      interval = lookup(health_check.value, "interval", null) == null ? 30 : health_check.value.interval
-      path     = lookup(health_check.value, "path", null) == null ? "/" : health_check.value.path
-      port     = lookup(health_check.value, "port", null) == null ? "traffic-port" : health_check.value.port
-      protocol = lookup(health_check.value, "protocol", null) == null ? "HTTP" : health_check.value.protocol
-      timeout  = lookup(health_check.value, "timeout", null) == null ? "5" : health_check.value.timeout
-      healthy_threshold = lookup(health_check.value, "healthy_threshold", null) == null ? "3" : health_check.value.healthy_threshold
+      enabled             = lookup(health_check.value, "enabled", null) == null ? true : health_check.value.enabled
+      interval            = lookup(health_check.value, "interval", null) == null ? 30 : health_check.value.interval
+      path                = lookup(health_check.value, "path", null) == null ? "/" : health_check.value.path
+      port                = lookup(health_check.value, "port", null) == null ? "traffic-port" : health_check.value.port
+      protocol            = lookup(health_check.value, "protocol", null) == null ? "HTTP" : health_check.value.protocol
+      timeout             = lookup(health_check.value, "timeout", null) == null ? "5" : health_check.value.timeout
+      healthy_threshold   = lookup(health_check.value, "healthy_threshold", null) == null ? "3" : health_check.value.healthy_threshold
       unhealthy_threshold = lookup(health_check.value, "unhealthy_threshold", null) == null ? "3" : health_check.value.unhealthy_threshold
-      matcher = lookup(health_check.value, "matcher", null) == null ? "200" : health_check.value.matcher
+      matcher             = lookup(health_check.value, "matcher", null) == null ? "200" : health_check.value.matcher
     }
   }
 
@@ -75,7 +75,7 @@ resource "aws_security_group" "alb_sg" {
     protocol    = "tcp"
     from_port   = "${lookup(var.lb_listener, "port", 80)}"
     to_port     = "${lookup(var.lb_listener, "port", 80)}"
-    cidr_blocks = "${split(",",var.lb_internal ? var.vpc_cidr : join(",",var.public_alb_whitelist))}"
+    cidr_blocks = "${split(",", var.lb_internal ? var.vpc_cidr : join(",", var.public_alb_whitelist))}"
   }
 
   egress {

@@ -12,8 +12,8 @@ resource "aws_ecs_task_definition" "main" {
     for_each = var.task_volumes
 
     content {
-      name                        = volume.value.name
-      host_path                   = lookup(volume.value, "host_path", null) == null ? null : volume.value.host_path
+      name      = volume.value.name
+      host_path = lookup(volume.value, "host_path", null) == null ? null : volume.value.host_path
 
       dynamic "docker_volume_configuration" {
         for_each = lookup(volume.value, "docker_volume_configuration", null) == null ? [] : volume.value.docker_volume_configuration
@@ -32,7 +32,7 @@ resource "aws_ecs_task_definition" "main" {
 
 # Service for awsvpc networking and ALB
 resource "aws_ecs_service" "awsvpc_alb" {
-  count = "${var.task_network_mode == "awsvpc" && var.enable_lb ? 1 : 0 }"
+  count = "${var.task_network_mode == "awsvpc" && var.enable_lb ? 1 : 0}"
 
   name            = "${var.service_name}"
   cluster         = "${var.ecs_cluster_id}"
@@ -57,7 +57,7 @@ resource "aws_ecs_service" "awsvpc_alb" {
 
 # Service for bridge networking and ALB
 resource "aws_ecs_service" "bridge_alb" {
-  count      = "${var.task_network_mode == "bridge" && var.enable_lb ? 1 : 0 }"
+  count      = "${var.task_network_mode == "bridge" && var.enable_lb ? 1 : 0}"
   depends_on = ["aws_alb_listener.main"]
 
   name            = "${var.service_name}"
@@ -78,7 +78,7 @@ resource "aws_ecs_service" "bridge_alb" {
 
 # Service for awsvpc networking and no ALB
 resource "aws_ecs_service" "awsvpc_nolb" {
-  count      = "${var.task_network_mode == "awsvpc" && !var.enable_lb ? 1 : 0 }"
+  count      = "${var.task_network_mode == "awsvpc" && ! var.enable_lb ? 1 : 0}"
   depends_on = ["aws_alb_listener.main"]
 
   name            = "${var.service_name}"
@@ -96,7 +96,7 @@ resource "aws_ecs_service" "awsvpc_nolb" {
 
 # Service for bridge networking and no ALB
 resource "aws_ecs_service" "bridge_noalb" {
-  count      = "${var.task_network_mode == "bridge" && !var.enable_lb ? 1 : 0 }"
+  count      = "${var.task_network_mode == "bridge" && ! var.enable_lb ? 1 : 0}"
   depends_on = ["aws_alb_listener.main"]
 
   name            = "${var.service_name}"
