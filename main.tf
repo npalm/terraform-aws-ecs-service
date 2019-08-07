@@ -7,7 +7,27 @@ resource "aws_ecs_task_definition" "main" {
   memory                   = "${var.task_memory}"
   requires_compatibilities = ["${var.service_launch_type}"]
   execution_role_arn       = "${var.awsvpc_task_execution_role_arn}"
-  volume                   = ["${var.task_volumes}"]
+
+  dynamic "volume" {
+    for_each = var.task_volumes
+
+    content {
+      name                        = volume.value.name
+      host_path                   = lookup(volume.value, "host_path", null) == null ? null : volume.value.host_path
+
+      dynamic "docker_volume_configuration" {
+        for_each = lookup(volume.value, "docker_volume_configuration", null) == null ? [] : volume.value.docker_volume_configuration
+
+        content {
+          scope         = lookup(docker_volume_configuration.value, "scope", null) == null ? null : docker_volume_configuration.value.scope
+          autoprovision = lookup(docker_volume_configuration.value, "autoprovision", null) == null ? null : docker_volume_configuration.value.autoprovision
+          driver        = lookup(docker_volume_configuration.value, "driver", null) == null ? null : docker_volume_configuration.value.driver
+          driver_opts   = lookup(docker_volume_configuration.value, "driver_opts", null) == null ? null : docker_volume_configuration.value.driver_opts
+          labels        = lookup(docker_volume_configuration.value, "labels", null) == null ? null : docker_volume_configuration.value.labels
+        }
+      }
+    }
+  }
 }
 
 # Service for awsvpc networking and ALB
@@ -19,8 +39,8 @@ resource "aws_ecs_service" "awsvpc_alb" {
   task_definition = "${aws_ecs_task_definition.main.arn}"
   desired_count   = "${var.service_desired_count}"
 
-  load_balancer = {
-    target_group_arn = "${aws_alb_target_group.main.arn}"
+  load_balancer {
+    target_group_arn = "${aws_alb_target_group.main[0].arn}"
     container_name   = "${lookup(var.lb_target_group, "container_name", var.service_name)}"
     container_port   = "${lookup(var.lb_target_group, "container_port", 8080)}"
   }
@@ -45,8 +65,8 @@ resource "aws_ecs_service" "bridge_alb" {
   task_definition = "${aws_ecs_task_definition.main.arn}"
   desired_count   = "${var.service_desired_count}"
 
-  load_balancer = {
-    target_group_arn = "${aws_alb_target_group.main.arn}"
+  load_balancer {
+    target_group_arn = "${aws_alb_target_group.main[0].arn}"
     container_name   = "${lookup(var.lb_target_group, "container_name", var.service_name)}"
     container_port   = "${lookup(var.lb_target_group, "container_port", 8080)}"
   }
