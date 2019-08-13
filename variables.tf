@@ -120,7 +120,7 @@ variable "task_memory" {
 
 variable "task_volumes" {
   description = "List of volume blocks for task definition"
-  type        = "list"
+  type        = list(map(string))
   default     = []
 }
 
