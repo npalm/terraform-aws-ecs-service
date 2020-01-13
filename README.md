@@ -142,6 +142,7 @@ module "blog" {
 | lb_subnetids | List of subnets to which the load balancer needs to be attached. Mandatory when enable_alb = true. | list | `<list>` | no |
 | lb_target_group | The target group to connectect the container to the load balancer listerner. | map | `<map>` | no |
 | lb_security_group_ids | Custom Load Balancer security group ids | list | `[]` | no |
+| lb_health_check_grace_period_seconds | Seconds to ignore failing load balancer health checks on newly instantiated tasks to prevent premature shutdown, up to 2147483647 | string | `0` | no |
 | service_desired_count | The number of instances of the task definition to place and keep running. | string | `1` | no |
 | service_launch_type | The launch type, can be EC2 or FARGATE. | string | `EC2` | no |
 | service_name | Logical name of the service. | string | - | yes |

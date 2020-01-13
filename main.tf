@@ -25,6 +25,8 @@ resource "aws_ecs_service" "awsvpc_alb" {
     container_port   = "${lookup(var.lb_target_group, "container_port", 8080)}"
   }
 
+  health_check_grace_period_seconds = "${var.lb_health_check_grace_period_seconds}"
+
   launch_type = "${var.service_launch_type}"
 
   network_configuration {
@@ -50,6 +52,8 @@ resource "aws_ecs_service" "bridge_alb" {
     container_name   = "${lookup(var.lb_target_group, "container_name", var.service_name)}"
     container_port   = "${lookup(var.lb_target_group, "container_port", 8080)}"
   }
+
+  health_check_grace_period_seconds = "${var.lb_health_check_grace_period_seconds}"
 
   launch_type = "${var.service_launch_type}"
 
