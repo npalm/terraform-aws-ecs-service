@@ -144,3 +144,9 @@ variable "lb_security_group_ids" {
   type        = "list"
   default     = []
 }
+
+variable "lb_health_check_grace_period_seconds" {
+  description = "Seconds to ignore failing load balancer health checks on newly instantiated tasks to prevent premature shutdown, up to 2147483647"
+  type        = "string"
+  default     = "0"
+}
