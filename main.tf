@@ -52,13 +52,17 @@ resource "aws_ecs_service" "awsvpc_alb" {
     subnets         = ["${var.awsvpc_service_subnetids}"]
   }
 
-  depends_on = ["aws_alb_listener.main"]
+  depends_on = [
+    aws_alb_listener.main,
+  ]
 }
 
 # Service for bridge networking and ALB
 resource "aws_ecs_service" "bridge_alb" {
   count      = "${var.task_network_mode == "bridge" && var.enable_lb ? 1 : 0}"
-  depends_on = ["aws_alb_listener.main"]
+  depends_on = [
+    aws_alb_listener.main,
+  ]
 
   name            = "${var.service_name}"
   cluster         = "${var.ecs_cluster_id}"
@@ -79,7 +83,9 @@ resource "aws_ecs_service" "bridge_alb" {
 # Service for awsvpc networking and no ALB
 resource "aws_ecs_service" "awsvpc_nolb" {
   count      = "${var.task_network_mode == "awsvpc" && ! var.enable_lb ? 1 : 0}"
-  depends_on = ["aws_alb_listener.main"]
+  depends_on = [
+    aws_alb_listener.main,
+  ]
 
   name            = "${var.service_name}"
   cluster         = "${var.ecs_cluster_id}"
@@ -97,7 +103,9 @@ resource "aws_ecs_service" "awsvpc_nolb" {
 # Service for bridge networking and no ALB
 resource "aws_ecs_service" "bridge_noalb" {
   count      = "${var.task_network_mode == "bridge" && ! var.enable_lb ? 1 : 0}"
-  depends_on = ["aws_alb_listener.main"]
+  depends_on = [
+    aws_alb_listener.main,
+  ]
 
   name            = "${var.service_name}"
   cluster         = "${var.ecs_cluster_id}"
